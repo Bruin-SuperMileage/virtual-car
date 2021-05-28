@@ -6,7 +6,7 @@
 #include <ctime>
 
 #include "motor.h"
-#include "./throttle/rampingCopy.h"
+#include "ramping.h"
 
 using namespace std;
 
@@ -16,7 +16,7 @@ motor::motor() // Need to add parameter to choose rampingType
     rampingType = "Linear";
     if (rampingType == "Linear")
     {
-        m_ramp = nullptr; // initialize to linear ramping object
+        m_ramp = new Linear; // initialize to linear ramping object
         m_rpm = 0;
         m_torque = 0;
         m_force = 0;

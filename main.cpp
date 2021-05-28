@@ -18,7 +18,7 @@ void check_input()
 int main()
 {
     track* t = new track;
-    motor* m = new motor();
+    motor* m = new motor;
     car* c = new car(t, m);
 
     cout.setf(ios::fixed);
@@ -57,14 +57,14 @@ int main()
         cout << "Invalid choice" << endl;
         exit(1);
     }
-    c->set_velocity(speed_choice);
+    // c->set_velocity(speed_choice);
     double time = 0; 
-    for(int i=0;i<lap_choice;i++)
+    for(int i=0; i<lap_choice; i++)
         time += t->run_time(c);
         // time += t->time_to_run(c);
 
     double l = 0.0;
-    for(int j=0;j<lap_choice;j++)
+    for(int j=0; j<lap_choice; j++)
         l += t->get_total_length();
     double ms = l/time;
     cout << endl << endl << "time: " << time << " s"<< endl;

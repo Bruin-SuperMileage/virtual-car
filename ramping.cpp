@@ -1,4 +1,4 @@
-#include "rampingCopy.h"
+#include "ramping.h"
 
 Ramping::Ramping():m_currentSpd(MIN_SPD), m_desiredSpd(MIN_SPD){}
 void Ramping::setCurrentSpd(int spd)      {  m_currentSpd = spd; }
@@ -29,6 +29,8 @@ void Ramping::spdDown(int amount){
   else
     m_currentSpd -= amount; 
 }
+
+Linear::Linear() {}
 
 int Linear::newSpd(int throttle, long timeMillis){
   setDesiredSpd(map(throttle, NEUTRAL_THROTTLE, MAX_THROTTLE, MIN_SPD, MAX_SPD));

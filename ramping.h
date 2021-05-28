@@ -33,6 +33,7 @@ private:
 
 class Linear : public Ramping{
 public:
+  Linear();
   int newSpd(int throttle, long timeMillis);
 };
 
