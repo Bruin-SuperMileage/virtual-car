@@ -16,7 +16,7 @@ motor::motor() // Need to add parameter to choose rampingType
     rampingType = "Linear";
     if (rampingType == "Linear")
     {
-        m_ramp = nullptr;
+        m_ramp = nullptr; // initialize to linear ramping object
         m_rpm = 0;
         m_torque = 0;
         m_force = 0;
@@ -35,7 +35,7 @@ unsigned long motor::get_time()
 
 double motor::get_voltage(int throttle) //throttle will be taken from UI (IDK how that will be implemented)
 {
-    int speed = m_ramp->newSpd(throttle, get_time());
+    int speed = m_ramp->newSpd(throttle, get_time()); // SEGFAULT - no ramp
     double voltage = (speed * 24)/255 ; //converts speed into a percentage of battery
     return voltage;
 }
@@ -86,8 +86,7 @@ double motor::hold15MPH(double speed)
         unsigned long curTime = get_time();
         rungeKuttaRPM(curTime - 50, curTime + 50, 1, get_voltage(100));
     }
-
-    return get_force();
+    return get_force(); // not sure if we have to use this
 }
 
 /*

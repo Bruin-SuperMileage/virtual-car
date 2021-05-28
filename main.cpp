@@ -60,7 +60,8 @@ int main()
     c->set_velocity(speed_choice);
     double time = 0; 
     for(int i=0;i<lap_choice;i++)
-        time += t->time_to_run(c);
+        time += t->run_time(c);
+        // time += t->time_to_run(c);
 
     double l = 0.0;
     for(int j=0;j<lap_choice;j++)

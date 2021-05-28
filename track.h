@@ -21,7 +21,7 @@ class track
     void set_c_dynamic_friction(double cdf);
     void set_fluid_density(double fd);
 
-    double time_to_run(car* Car);
+    double run_time(car* Car);
     double distance_between_coordinates(vector<double>* c1, vector<double>* c2);
     double angle_between_coordinates(vector<double>* c1, vector<double>* c2);
 

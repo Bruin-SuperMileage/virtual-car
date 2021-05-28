@@ -36,12 +36,6 @@ double car::frictional_force() // sign conventions are absolutely fucked, we nee
         return m_track->get_c_dynamic_friction()*m_normal_force;
 }
 
-void car::update_net_force()
-{
-    m_net_force_x = frictional_force() + m_drag_force + m_gravitational_force_x + get_engine_force();
-    m_net_force_y = m_gravitational_force_y + m_normal_force;
-}
-
   // accessor methods
 double car::get_mass() {return m_mass;}
 double car::get_distance() {return m_s;}
@@ -50,41 +44,48 @@ double car::get_acceleration() {return m_a;}
 double car::get_altitude() {return m_altitude;}
 double car::get_orientation() {return m_orientation;}
 double car::get_throttle() {return m_throttle;}
-double car::get_engine_force() {m_engine_force = m_motor->get_force(); return m_engine_force;}
-double car::get_gravitational_force_x() {return m_gravitational_force_x;}
-double car::get_gravitational_force_y() {return m_gravitational_force_y;}
+double car::get_engine_force() {
+    m_engine_force = m_motor->get_force();
+    return m_engine_force;}
+double car::get_gravitational_force_x() {
+    m_gravitational_force_x = m_mass * GRAVITY * sin(m_orientation);
+    return m_gravitational_force_x;
+}
+double car::get_gravitational_force_y() {
+    m_gravitational_force_y = m_mass * GRAVITY * cos(m_orientation);
+    return m_gravitational_force_y;
+}
 double car::get_normal_force() {return m_normal_force;}
-double car::get_net_force_x() {return m_net_force_x;}
-double car::get_net_force_y() {return m_net_force_y;}
+double car::get_net_force_x() {
+    m_net_force_x = frictional_force() + m_drag_force + m_gravitational_force_x + get_engine_force();
+    return m_net_force_x;
+}
+double car::get_net_force_y() {
+    m_net_force_y = m_gravitational_force_y + m_normal_force;
+    return m_net_force_y;
+}
 double car::get_power() {return m_power;}
 double car::get_c_rolling_resistance() {return m_c_rolling_resistance;}
 double car::get_c_drag() {return m_c_drag;}
 double car::get_drag_area() {return m_drag_area;}
 double car::get_drag_force() {return m_drag_force;}
+motor* car::get_motor() {return m_motor;}
 
   // mutator methods
 void car::set_mass(double m)
 {
     m_mass = m;
     set_orientation(m_orientation); //must change values that depend on mass
-    update_net_force();
 }
 void car::climb(double d) {m_altitude += d;}
 void car::set_orientation(double o)
 {
     m_orientation = o;
-    m_gravitational_force_x = m_mass * GRAVITY * sin(m_orientation);
+    m_gravitational_force_x = m_mass * GRAVITY * sin(m_orientation); // can be changed to use sets later, not necessary
     m_gravitational_force_y = m_mass * GRAVITY * cos(m_orientation);
     m_normal_force = (-1.0) * m_gravitational_force_y;
-    update_net_force();
 }
 void car::set_throttle(double t) {m_throttle = t;}
-// TODO: remove this function, corresponding calls in track.cpp
-void car::set_engine_force(double ef)
-{
-    m_engine_force = ef;
-    update_net_force();
-}
 void car::set_power(double p) {m_power = p;}
 void car::set_c_rolling_resistance(double cr){m_c_rolling_resistance = cr;}
 void car::set_c_drag(double cd) {m_c_drag = cd;}

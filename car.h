@@ -12,7 +12,6 @@ class car
 
       //auxillary functions
     double frictional_force();
-    void update_net_force();
 
       //accessor methods
     double get_mass();
@@ -34,12 +33,12 @@ class car
     double get_c_drag();
     double get_drag_force();
     double get_drag_area();
+    motor* get_motor();
     
       //mutator methods
     void set_mass(double m);
     void set_orientation(double o);
     void set_throttle(double t);
-    void set_engine_force(double ef);
     void set_power(double p);
     void set_c_rolling_resistance(double cr);
     void set_c_drag(double cd);
